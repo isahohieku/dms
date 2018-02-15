@@ -1,0 +1,31 @@
+.container
+      .row.py-5(style='position: relative;')
+        .col-lg-2.col-md-2
+          .avatar-round
+            img(src='/'+ avatar, width="50")
+        .col
+          form(action="/search", method="post")
+            input.search-form.custom-form-control.mt-0(type='search', placeholder='Search', name="search", required)
+        .col-lg-2.col-md-2
+          i.dropdown-button.fa.fa-bars.float-right(style='font-size: 32px;')
+        .menu-items
+          ul
+            li
+              a(href='/dashboard') Dashboard
+            li
+              a(href='/collection') My Files
+            li
+              a(href='/profile') View Profile
+            if category === 'Admin'  
+              li
+                a(href="/admin/manager") Manager
+              li
+                a(href='/admin/create_user') Create User
+              li  
+                a(href='/admin/files/all') All Files
+              li  
+                a(href='/admin/folders/all') All Folders
+            li
+              a(href='/trash') Trash
+            li
+              a(href='/logout') Logout

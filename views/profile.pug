@@ -1,0 +1,31 @@
+extends layout
+
+block content
+
+  // Modify Modal
+  #passwordModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')
+    .modal-dialog.modal-dialog-centered(role='document')
+      .modal-content.background-dark
+        .modal-header
+          h6#exampleModalLongTitle.modal-title.font-light Modify Password
+          button.close(type='button', data-dismiss='modal', aria-label='Close')
+            span(aria-hidden='true') &times;
+        .modal-body
+          form(action="/modify_password", method="post")
+            input.custom-form-control(type='password', placeholder='Enter Old Password', name="old_password", required='')
+            input.custom-form-control(type='password', placeholder='Enter New Password', name="new_password", required='')
+            input.custom-form-control(type='password', placeholder='Confrim New Password', name="confirm_password", required='')
+            button.button Modify Password
+  include menu.pug
+  .container
+    .row
+      .col
+        .profile
+          .profile-img
+            img(src='/'+ user.avatarLink, width='80')
+          h6.font-light.text-center.mt-4 Firstname Lastname
+          button.button.mx-auto(data-toggle='modal', data-target='#passwordModal') Modify Password
+          h6.font-light.text-center.mt-5 Change Avatar
+          form(action="/profile", method="post", enctype="multipart/form-data")
+            input.custom-form-control(type='file', name="avatar" accept="image/*" required)
+            button.button.mx-auto(type="submit") Update

@@ -1,0 +1,63 @@
+extends layout
+
+block content
+    include menu.pug
+    .container.mt-3
+        .row
+            .col
+
+                // Files
+                .row
+                    .col
+                        h6.font-weight-light.text-uppercase Files
+                        hr.background-light
+
+                        each file, i in files
+                            .card.document-meta.float-left.m-3
+                                .rounded-img.mx-auto
+                                    img(src='/img/file.png', alt='File type')
+                                .document-meta-body.mt-2.px-2
+                                    h6 
+                                        = file.fileName
+                                    h6
+                                        i 
+                                            - var time = file.dateCreated.toISOString();
+                                            - time = time.substring(0, time.indexOf('T'))
+                                                =time
+                                    h6
+                                        a.font-dark(href='#') 
+                                            = file.createdBy
+
+                                    form(action="/file/"+ file._id, method="post")
+                                        button.button.mx-auto Delete
+
+                        else
+                            h6.font-weight-light.text-uppercase No file Found
+
+                // Folders
+                .row
+                    .col
+                        h6.font-weight-light.text-uppercase Folders
+                        hr.background-light
+
+                        each folder, i in folders
+                            .card.document-meta.float-left.m-3
+                                .rounded-img.mx-auto
+                                    img(src='/img/folder.png', alt='folder type')
+                                .document-meta-body.mt-2.px-2
+                                    h6 
+                                        = folder.folderName
+                                    h6
+                                        i 
+                                            - var time = folder.dateCreated.toISOString();
+                                            - time = time.substring(0, time.indexOf('T'))
+                                                =time
+                                    h6
+                                        a.font-dark(href='#') 
+                                            = folder.createdBy
+
+                                    form(action="/folder/"+ folder._id, method="post")
+                                        button.button.mx-auto Delete
+
+                        else
+                            h6.font-weight-light.text-uppercase No folder Found

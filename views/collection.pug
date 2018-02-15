@@ -1,0 +1,87 @@
+extends layout
+
+block content
+    include menu.pug
+
+    ul.list_items
+        each folder,i in folders
+            li
+                .modal.fade(id=folder._id, tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')
+                    .modal-dialog.modal-dialog-centered(role='document')
+                        .modal-content.background-dark
+                            .modal-header
+                                h6#exampleModalLongTitle.modal-title.font-light Delete Folder
+                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            .modal-body
+                                form(action="/folder/trash/"+ folder._id, method="post")
+                                    h6.text-center.font-weight-light Do you want to delete this folder?
+                                    h6.text-center.font-weight-light 
+                                        =folder.folderName
+                                    input(type="hidden", value="PUT", name="_method")
+                                    .mx-auto(style="width:380px !important;")
+                                        button.button.float-left Yes
+                                        button.button.float-left(type="button", data-dismiss='modal', aria-label='Close') No
+    
+    ul.list_items
+        each file,i in files
+            li
+                .modal.fade(id=file._id, tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')
+                    .modal-dialog.modal-dialog-centered(role='document')
+                        .modal-content.background-dark
+                            .modal-header
+                                h6#exampleModalLongTitle.modal-title.font-light Delete File
+                                button.close(type='button', data-dismiss='modal', aria-label='Close')
+                                    span(aria-hidden='true') &times;
+                            .modal-body
+                                form(action="/file/trash/"+ file._id, method="post")
+                                    h6.text-center.font-weight-light Do you want to delete this file?
+                                    h6.text-center.font-weight-light 
+                                        =file.fileName
+                                    input(type="hidden", value="PUT", name="_method")
+                                    .mx-auto(style="width:380px !important;")
+                                        button.button.float-left Yes
+                                        button.button.float-left(type="button", data-dismiss='modal', aria-label='Close') No
+
+
+    .container.mt-5
+        .row
+            // Side Bar
+            .col-lg-3.col-md-3.pl-5
+                h6.font-weight-light.text-uppercase.mt-3.mb-4 All folders
+                ul.list_items
+                    each folder, i in folders
+                        li
+                            i.fa.fa-folder.mr-3
+                            | 
+                            span
+                                = folder.folderName
+                            button(type='', data-toggle='modal', data-target='#'+ folder._id).button_delete.fa.fa-times-circle.ml-3 
+                             
+                                   
+            .col-lg-9.col-md-9
+                table.table.border-0
+                    thead.font-dark.background-light.border-0
+                        tr
+                            th.font-weight-light.border-0 File Name
+                            th.font-weight-light.border-0 Date Added
+                            th.font-weight-light.border-0 Folder
+                            th.font-weight-light.border-0
+                    tbody.font-light
+                        
+
+                    each file, i in files
+                        tr
+                            td.border-0
+                                h6.font-weight-light(style='line-height: 48px;') 
+                                    = file.fileName
+                            td.border-0
+                                h6.font-weight-light(style='line-height: 48px;') 
+                                    - var time = file.dateCreated.toISOString();
+                                    - time = time.substring(0, time.indexOf('T'))
+                                        =time                            
+                            td.border-0
+                                h6.font-weight-light(style='line-height: 48px;') 
+                                    = file.folder
+                            td.w-25.border-0
+                                button.button.my-1(type='', data-toggle='modal', data-target='#'+ file._id) Trash

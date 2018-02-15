@@ -1,0 +1,65 @@
+extends layout
+
+block content
+    include menu.pug
+    .container.mt-5
+        .row
+            .col
+                // Users
+                .row
+                    .col
+                        h6.font-weight-light.text-uppercase Users
+                        hr.background-light
+
+                        each user, i in users
+                            .card.document-meta.float-left.m-3
+                                .rounded-img.mx-auto
+                                    img(src='/'+ user.avatarLink, width='100')
+                                .document-meta-body.mt-2.px-2
+                                    h6 
+                                        = user.firstname + ' ' + user.lastname
+                        else
+                            h6.font-weight-light.text-uppercase No User Found
+
+                // Files
+                .row
+                    .col
+                        h6.font-weight-light.text-uppercase.mt-5 Files
+                        hr.background-light
+
+                        each file, i in files
+                            .card.document-meta.float-left.m-3
+                                img.card-img-top.mx-auto(src='/img/pdf.png', alt='File type')
+                                .document-meta-body.mt-2.px-2
+                                    h6 
+                                        = file.fileName
+                                    h6
+                                        i
+                                            = file.dateCreated
+                                    h6
+                                        a.font-dark(href='#') 
+                                            = file.createdBy
+                        else
+                            h6.font-weight-light.text-uppercase No File Found
+                // Folders
+                .row
+                    .col
+                        h6.font-weight-light.text-uppercase.mt-5 Folders
+                        hr.background-light
+
+                        each folder, i in folders
+                            .card.document-meta.float-left.m-3
+                                .rounded-img.mx-auto
+                                    img(src='/img/folder.png', alt='File type')
+                                .document-meta-body.mt-2.px-2
+                                    h6 
+                                        = folder.folderName
+                                    h6
+                                        i 
+                                            = folder.dateCreated
+                                    h6
+                                        a.font-dark(href='#') 
+                                            = folder.createdBy
+
+                        else
+                            h6.font-weight-light.text-uppercase No Folder Found

@@ -1,0 +1,27 @@
+extends ../layout
+
+block content
+
+    include ../menu.pug
+        
+    .container
+        .row
+            .col
+                a(href='#', style='line-height: 48px; font-size: 20px;')
+                    i.fa.fa-caret-left.mr-2(style='font-size: 20px;')
+                    | Back
+        .row
+            .col
+                .profile
+                    form.pb-5(action='/admin/create_user', method='post')
+                        h5 ACCOUNT INFORMATION
+                        input.custom-form-control(type='text', placeholder='Email', name='email', required, autofocus='')
+                        input.custom-form-control(type='password', placeholder='Password', name='password', required)
+                        input.custom-form-control(type='password', placeholder='Confirm Password', name='password2', required='')
+                        select.custom-form-control(name="category", required)
+                            option Admin
+                            option Normal
+                        h5.mt-3 PERSONAL INFORMATION
+                        input.custom-form-control(type='text', placeholder='Firstname', name='firstname', required='')
+                        input.custom-form-control(type='text', placeholder='Lastname', name='lastname', required='')
+                        button.button.w-75.mx-auto(type='submit') Create User

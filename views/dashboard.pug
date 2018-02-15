@@ -1,0 +1,111 @@
+extends layout
+
+block content
+    // Add Folder Modal
+    #folderModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content.background-dark
+                .modal-header
+                    h6#exampleModalLongTitle.modal-title.font-light Add a Folder
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') &times;
+                .modal-body
+                    form(action="/folder/add", method="post")
+                        input.custom-form-control(type='text', placeholder='Folder Name', name="foldername", required, autofocus)
+                        button.button Create Folder
+    // Add Folder Modal
+    #documentModal.modal.fade(tabindex='-1', role='dialog', aria-labelledby='exampleModalCenterTitle', aria-hidden='true')
+        .modal-dialog.modal-dialog-centered(role='document')
+            .modal-content.background-dark
+                .modal-header
+                    h6.modal-title.font-light(id='') Add a File
+                    button.close(type='button', data-dismiss='modal', aria-label='Close')
+                        span(aria-hidden='true') &times;
+                .modal-body
+                    form(action="/file/add", method="post", enctype="multipart/form-data")
+                        input.custom-form-control(type='file', accept="image/*", name="fileName", required)
+                        input.custom-form-control(type='text', name="name", placeholder="File Name" required)
+                        select.custom-form-control(name="folderName", required)
+                            option Select a Folder
+                            each folder, i in folders
+                                
+                                option 
+                                    = folder.folderName
+                            
+                        button.button Upload File
+    include menu.pug
+    .container
+        .row
+            .col
+                button.button.float-left(type='', data-toggle='modal', data-target='#folderModal') Add Folder
+                button.button(type='', data-toggle='modal', data-target='#documentModal') Add Document
+    .container.mt-5
+        .row
+            // Side Bar
+            .col-lg-4.col-md-4.pl-5
+                h6.font-weight-light.text-uppercase.mb-4 Recent files
+                ul.list_items
+                    each file, i in files
+                        li 
+                            = file.fileName
+                    else
+                        li
+                            h6.font-weight-light.mb-4 No files found
+
+                h6.font-weight-light.text-uppercase.mb-4.mt-5 Recent folders
+                ul.list_items
+                    each folder, i in folders
+                        li 
+                            = folder.folderName
+                    else
+                        li
+                            h6.font-weight-light.mb-4 No folders found
+
+            .col-lg-8.col-md-8
+
+                .row
+
+                    .col
+
+                        h6.font-weight-light.text-capitalize Folders
+                        hr.background-light
+
+                        each folder, i in folders
+                            .card.document-meta.float-left.m-3
+                                img.card-img-top.mx-auto(src='/img/pdf.png', alt='File type')
+                                .document-meta-body.mt-2.px-2
+                                    h6 
+                                        = folder.folderName
+                                    h6
+                                        - var time = folder.dateCreated.toISOString();
+                                        - time = time.substring(0, time.indexOf('T'))
+                                            =time
+                                    h6
+                                        a.font-dark(href='#') 
+                                            = folder.createdBy
+                        else    
+                            h6.font-weight-light.mb-5 No Folders Found 
+ 
+                .row
+
+                    .col
+
+                        h6.font-weight-light.text-capitalize Files
+                        hr.background-light
+
+                        each file, i in files
+                            .card.document-meta.float-left.m-3
+                                img.card-img-top.mx-auto(src='/img/pdf.png', alt='File type')
+                                .document-meta-body.mt-2.px-2
+                                    h6 
+                                        = file.fileName
+                                    h6
+                                        - var time = file.dateCreated.toISOString();
+                                        - time = time.substring(0, time.indexOf('T'))
+                                            =time
+                                    h6
+                                        a.font-dark(href='#') 
+                                            = file.createdBy      
+                        else    
+                            h6.font-weight-light No Files Found                              
+                
