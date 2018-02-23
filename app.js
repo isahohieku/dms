@@ -109,8 +109,9 @@ app.post('/', passport.authenticate('local'), function(req, res,){
   };
 
   if(req.user.status === true){
-    res.send('Suspended');
-    res.end();
+    //req.flash('message', 'Your Account has Being Suspended');
+    //console.log(sessionFlash.message);
+    res.redirect('/');
   }
   else{
     PersonalModel.findOne({authentication_id: req.user._id}, function(err, personal){
